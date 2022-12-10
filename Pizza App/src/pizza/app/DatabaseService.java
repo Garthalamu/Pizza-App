@@ -63,6 +63,7 @@ public class DatabaseService {
         ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
         
         try {
+            // Pass headers and data into a multidimensional ArrayList
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnCount = rsmd.getColumnCount();
             
