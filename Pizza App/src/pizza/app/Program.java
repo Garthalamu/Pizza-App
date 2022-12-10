@@ -2,7 +2,6 @@ package pizza.app;
 
 import java.sql.*;
 import io.bretty.console.table.*;
-import pizza.app.DatabaseService;
 
 /**
  * Main method and starting point of program.
