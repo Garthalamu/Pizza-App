@@ -4,6 +4,7 @@ package pizza.app;
 import java.util.Scanner;
 import java.sql.*;
 import io.bretty.console.table.*;
+import java.math.BigInteger;
 
 /**
  *
@@ -22,7 +23,7 @@ public final class PromptInput {
     * @param max max int value
     * @reutrn returns the user's entered int
     * 
-    * Validates and returns the user's input when selecting a numbered menu option.
+    * Scans, validates, and returns the user's input when selecting a numbered menu option.
     */
     private static int getUserSelectedNum(int min, int max)
     {
@@ -57,12 +58,57 @@ public final class PromptInput {
         return input;
     }
     
+    /**
+     * 
+     * @return Scans and returns next token entered by user in the console. Returns token as a string.
+     * Method does not attempt any input validation.
+     */
+    private static String getNextToken()
+    {
+        String input;
+        
+        Scanner scan = new Scanner(System.in);
+
+        input = scan.next();
+        
+        return input;
+    }
     
-    /*
-    * Inputs:
-    * 1 -- Go to orderCrust()
-    * 2 -- Go to 
-    */
+    
+    /**
+     * 
+     * @return Scans and returns next big int entered by user in the console. Returns token as a big int.
+     * Method does not attempt any input validation.
+     */
+    private static BigInteger getNextBigInt()
+    {
+        BigInteger input;
+        
+        Scanner scan = new Scanner(System.in);
+
+        input = scan.nextBigInteger();
+        
+        return input;
+    }
+    
+    
+    /**
+     * 
+     * @return Scans and returns next line entered by user in the console. Returns token as a string.
+     * Method does not attempt any input validation.
+     */
+    private static String getNextLine()
+    {
+        String input;
+        
+        Scanner scan = new Scanner(System.in);
+
+        input = scan.nextLine();
+        
+        return input;
+    }
+    
+    
     public static int home()
     {
         System.out.println("Select an option below by entering the relevant number:\n"
@@ -179,6 +225,48 @@ public final class PromptInput {
             return true;
         else
             return false;
+    }
+    
+    
+    public static Order customerInfo()
+    {
+        Order order = new Order();
+        String userInput;
+        
+        System.out.println("Enter your first name:");
+        userInput = getNextToken();
+        order.setFirstName(userInput);
+        
+        System.out.println("Enter your last name:");
+        userInput = getNextToken();
+        order.setLastName(userInput);
+        
+        System.out.println("Enter your street address, not including city, state, or zip:");
+        userInput = getNextLine();
+        order.setStreet(userInput);
+        
+        System.out.println("Enter your city:");
+        userInput = getNextLine();
+        order.setCity(userInput);
+        
+        System.out.println("Enter your state as a two character abbreviation:");
+        userInput = getNextToken();
+        order.setAddressState(userInput);
+        
+        System.out.println("Enter your zip:");
+        userInput = getNextToken();
+        order.setZip(userInput);
+        
+        System.out.println("Enter your payment type (Card or Cash):");
+        userInput = getNextToken();
+        order.setPaymentType(userInput);
+        
+        BigInteger userCreditCard;
+        System.out.println("Enter your credit card number:");
+        userCreditCard = getNextBigInt();
+        order.setCreditCard(userCreditCard);
+        
+        return order;
     }
     
     
