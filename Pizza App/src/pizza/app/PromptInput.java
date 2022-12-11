@@ -104,6 +104,43 @@ public final class PromptInput {
         return selectedCrustStr;
     }
     
+    
+    public static String orderCheese()
+    {
+        String selectedCheeseStr = "";
+        
+        System.out.println("Select a cheese from the table below by typing the number of the cheese, or type 0 for no cheese.");
+        Table crustOptionsTable = dataBaseService.GETAsPrintableTable("SELECT ROW_NUMBER() OVER (ORDER BY cheeseType) AS \"Number\", cheeseType AS \"Cheese Type\" FROM cheese;");
+        System.out.println(crustOptionsTable);
+        
+        //Find max valid input num
+        int maxInputNum;
+        try 
+        { 
+            ResultSet maxInputNumRS = dataBaseService.GET("SELECT COUNT(*) AS \"Max Number\" FROM cheese;");
+            maxInputNumRS.next();
+            maxInputNum = maxInputNumRS.getInt(1); 
+            
+            //Get and validate user input
+            int userInput = getUserSelectedNum(0,maxInputNum);
+            
+            //If we don't want cheese, return null from the method
+            if (userInput == 0)
+                return null;
+            
+            //Get the user's selection as a string
+            ResultSet selectedCheeseRS = dataBaseService.GET("SELECT sub.\"Cheese Type\" FROM (SELECT ROW_NUMBER() OVER (ORDER BY cheeseType) AS \"Number\", cheeseType AS \"Cheese Type\" FROM cheese) AS sub WHERE sub.\"Number\" = " + userInput + ";");
+            selectedCheeseRS.next();
+            selectedCheeseStr = selectedCheeseRS.getString(1);
+            System.out.println(selectedCheeseStr);
+        } 
+        catch (SQLException e) { e.printStackTrace(); }
+        
+        //Return the user's selection
+        return selectedCheeseStr;
+    }
+    
+    
     public static void ViewOrders() {
         System.out.println(DatabaseService.GETAsPrintableTable("SELECT o.orderid, CONCAT(chef.firstname,' ',chef.lastname) \"Chef Name\", "
                                                                 + "CONCAT(driver.firstname,' ',driver.lastname) \"driver name\", "
