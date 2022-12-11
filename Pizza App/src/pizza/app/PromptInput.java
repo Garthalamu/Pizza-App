@@ -104,6 +104,84 @@ public final class PromptInput {
         return selectedCrustStr;
     }
     
+    
+    public static String orderCheese()
+    {
+        String selectedCheeseStr = "";
+        
+        System.out.println("Select a cheese from the table below by typing the number of the cheese.");
+        Table cheeseOptionsTable = dataBaseService.GETAsPrintableTable("SELECT ROW_NUMBER() OVER (ORDER BY cheeseType) AS \"Number\", cheeseType AS \"Cheese Type\" FROM cheese;");
+        System.out.println(cheeseOptionsTable);
+        
+        //Find max valid input num
+        int maxInputNum;
+        try 
+        { 
+            ResultSet maxInputNumRS = dataBaseService.GET("SELECT COUNT(*) AS \"Max Number\" FROM cheese;");
+            maxInputNumRS.next();
+            maxInputNum = maxInputNumRS.getInt(1); 
+            
+            //Get and validate user input
+            int userInput = getUserSelectedNum(1,maxInputNum);
+            
+            //Get the user's selection as a string
+            ResultSet selectedCheeseRS = dataBaseService.GET("SELECT sub.\"Cheese Type\" FROM (SELECT ROW_NUMBER() OVER (ORDER BY cheeseType) AS \"Number\", cheeseType AS \"Cheese Type\" FROM cheese) AS sub WHERE sub.\"Number\" = " + userInput + ";");
+            selectedCheeseRS.next();
+            selectedCheeseStr = selectedCheeseRS.getString(1);
+            System.out.println(selectedCheeseStr);
+        } 
+        catch (SQLException e) { e.printStackTrace(); }
+        
+        //Return the user's selection
+        return selectedCheeseStr;
+    }
+    
+    
+    public static String orderTopping()
+    {
+        String selectedToppingStr = "";
+        
+        System.out.println("Select a topping from the table below by typing the number of the topping.");
+        Table toppingOptionsTable = dataBaseService.GETAsPrintableTable("SELECT ROW_NUMBER() OVER (ORDER BY toppingType) AS \"Number\", toppingType AS \"Topping Type\" FROM toppings;");
+        System.out.println(toppingOptionsTable);
+        
+        //Find max valid input num
+        int maxInputNum;
+        try 
+        { 
+            ResultSet maxInputNumRS = dataBaseService.GET("SELECT COUNT(*) AS \"Max Number\" FROM toppings;");
+            maxInputNumRS.next();
+            maxInputNum = maxInputNumRS.getInt(1); 
+            
+            //Get and validate user input
+            int userInput = getUserSelectedNum(1,maxInputNum);
+            
+            //Get the user's selection as a string
+            ResultSet selectedToppingRS = dataBaseService.GET("SELECT sub.\"Topping Type\" FROM (SELECT ROW_NUMBER() OVER (ORDER BY toppingType) AS \"Number\", toppingType AS \"Topping Type\" FROM toppings) AS sub WHERE sub.\"Number\" = " + userInput + ";");
+            selectedToppingRS.next();
+            selectedToppingStr = selectedToppingRS.getString(1);
+            System.out.println(selectedToppingStr);
+        } 
+        catch (SQLException e) { e.printStackTrace(); }
+        
+        //Return the user's selection
+        return selectedToppingStr;
+    }
+    
+    public static boolean requestMoreToppings()
+    {
+        System.out.println("Select an option below by entering the relevant number:\n"
+                            + "1 -- Add another topping\n"
+                            + "2 -- Continue with order\n");
+        int userInput = getUserSelectedNum(1,2);
+        
+        if (userInput == 1)
+            return true;
+        else
+            return false;
+    }
+    
+    
     public static void ViewOrders() {
         System.out.println(DatabaseService.GETAsPrintableTable(
                 "SELECT po.orderid, po.itemnum, po.amount, po.crusttype \"crust\", " +
