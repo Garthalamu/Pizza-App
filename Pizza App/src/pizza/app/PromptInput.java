@@ -86,6 +86,7 @@ public final class PromptInput {
         try 
         { 
             ResultSet maxInputNumRS = dataBaseService.GET("SELECT COUNT(*) AS \"Max Number\" FROM crust;");
+            maxInputNumRS.next();
             maxInputNum = maxInputNumRS.getInt(1); 
             
             //Get and validate user input
@@ -93,7 +94,9 @@ public final class PromptInput {
             
             //Get the user's selection as a string
             ResultSet selectedCrustRS = dataBaseService.GET("SELECT sub.\"Crust Type\" FROM (SELECT ROW_NUMBER() OVER (ORDER BY crustType) AS \"Number\", crustType AS \"Crust Type\" FROM crust) AS sub WHERE sub.\"Number\" = " + userInput + ";");
+            selectedCrustRS.next();
             selectedCrustStr = selectedCrustRS.getString(1);
+            System.out.println(selectedCrustStr);
         } 
         catch (SQLException e) { e.printStackTrace(); }
         

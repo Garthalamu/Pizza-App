@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import java.sql.*;
 import io.bretty.console.table.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DatabaseService {
     private String _URL,
