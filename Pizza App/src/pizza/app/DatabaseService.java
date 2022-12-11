@@ -56,7 +56,9 @@ public class DatabaseService {
      * @return 
      */
     public static Table GETAsPrintableTable(String query) {
-        ColumnFormatter<String> cf = ColumnFormatter.text(Alignment.CENTER, 15);
+        int MAX_WIDTH = 20;
+        
+        ColumnFormatter<String> cf = ColumnFormatter.text(Alignment.CENTER, MAX_WIDTH);
         
         ResultSet rs = GET(query);
         

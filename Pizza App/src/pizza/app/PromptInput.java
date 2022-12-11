@@ -104,4 +104,14 @@ public final class PromptInput {
         return selectedCrustStr;
     }
     
+    public static void ViewOrders() {
+        System.out.println(DatabaseService.GETAsPrintableTable("SELECT o.orderid, CONCAT(chef.firstname,' ',chef.lastname) \"Chef Name\", "
+                                                                + "CONCAT(driver.firstname,' ',driver.lastname) \"driver name\", "
+                                                                + "CONCAT(c.firstname,' ',c.lastname) \"Customer Name\""
+                                                                + "FROM orders o "
+                                                                + "INNER JOIN employee chef ON o.chefid = chef.employeeid "
+                                                                + "INNER JOIN employee driver ON o.driverid = driver.employeeid "
+                                                                + "INNER JOIN customer c ON o.customerid=c.customerid"));
+    }
+    
 }

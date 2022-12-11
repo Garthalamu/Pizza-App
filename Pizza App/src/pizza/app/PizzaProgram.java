@@ -25,7 +25,7 @@ public final class PizzaProgram {
         
         if (menuSelect == 2)
         {
-            //DO OTHER STUFF
+            PromptInput.ViewOrders();
         }
             
     }
