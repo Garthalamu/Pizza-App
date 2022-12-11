@@ -10,17 +10,15 @@ public class Program {
     
     // Main Method
     public static void main(String[] args) {
-//        Example:
-//
         new DatabaseService("localhost", "5432", "finalproject", "postgres", "admin");
-//        
-//        StringBuilder queryString = new StringBuilder();
-//        queryString.append("SELECT o.orderid, e.firstname first, e.lastname last FROM orders o ")
-//                .append("INNER JOIN employee e ON o.chefid = e.employeeid ")
-//                .append("ORDER BY e.lastname");
-//        
-//        Table queryTable = DatabaseService.GETAsPrintableTable(queryString.toString());
-//        
-//        System.out.println(queryTable);
+        
+        StringBuilder queryString = new StringBuilder();
+        queryString.append("SELECT o.orderid, e.firstname first, e.lastname last FROM orders o ")
+                .append("INNER JOIN employee e ON o.chefid = e.employeeid ")
+                .append("ORDER BY e.lastname");
+        
+        Table queryTable = DatabaseService.GETAsPrintableTable(queryString.toString());
+        
+        System.out.println(queryTable);
     }
 }
