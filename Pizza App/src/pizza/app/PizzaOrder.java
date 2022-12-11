@@ -10,7 +10,7 @@ public class PizzaOrder {
     
     private String crust;
     private String cheese;
-    private ArrayList<String> toppings;
+    private ArrayList<String> toppings = new ArrayList<String>();
     private int quantity;
     
     
