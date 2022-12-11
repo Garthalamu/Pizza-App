@@ -12,6 +12,7 @@ public class DatabaseService {
     
     private static Connection _connection;
     
+    
     /**
      * Setups up the connection to the database with the provided information.
      * 
