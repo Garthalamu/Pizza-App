@@ -183,13 +183,21 @@ public final class PromptInput {
     
     
     public static void ViewOrders() {
-        System.out.println(DatabaseService.GETAsPrintableTable("SELECT o.orderid, CONCAT(chef.firstname,' ',chef.lastname) \"Chef Name\", "
-                                                                + "CONCAT(driver.firstname,' ',driver.lastname) \"driver name\", "
-                                                                + "CONCAT(c.firstname,' ',c.lastname) \"Customer Name\""
-                                                                + "FROM orders o "
-                                                                + "INNER JOIN employee chef ON o.chefid = chef.employeeid "
-                                                                + "INNER JOIN employee driver ON o.driverid = driver.employeeid "
-                                                                + "INNER JOIN customer c ON o.customerid=c.customerid"));
+        System.out.println(DatabaseService.GETAsPrintableTable(
+                "SELECT po.orderid, po.itemnum, po.amount, po.crusttype \"crust\", " +
+                "po.cheesetype \"cheese\", pot.toppingtype \"topping\", " +
+                "CONCAT(chef.firstname,' ',chef.lastname) \"chef Name\", " +
+                "CONCAT(driver.firstname,' ',driver.lastname) \"driver Name\", " +
+                "CONCAT(cust.firstname,' ',cust.lastname) \"customer Name\" " +
+                "FROM pizza_order po " +
+                "INNER JOIN pizza_order_toppings pot " +
+                "ON po.orderid=pot.orderid AND po.itemnum=pot.itemnum " +
+                "INNER JOIN orders o ON po.orderid=o.orderid " +
+                "INNER JOIN employee chef ON o.chefid=chef.employeeid " +
+                "INNER JOIN employee driver ON o.driverid=driver.employeeid " +
+                "INNER JOIN customer cust ON o.customerid=cust.customerid " +
+                "ORDER BY po.orderid, po.itemnum"
+        ));
     }
     
 }
