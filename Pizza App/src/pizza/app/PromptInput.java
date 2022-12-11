@@ -76,7 +76,7 @@ public final class PromptInput {
     {
         String selectedCrustStr = "";
         
-        System.out.println("Select a crust from the table below by typing the name of the crust.");
+        System.out.println("Select a crust from the table below by typing the number of the crust.");
         Table crustOptionsTable = DatabaseService.GETAsPrintableTable("SELECT ROW_NUMBER() OVER (ORDER BY crustType) AS \"Number\", crustType AS \"Crust Type\" FROM crust;");
         System.out.println(crustOptionsTable);
         
