@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import java.sql.*;
 import io.bretty.console.table.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DatabaseService {
     private String _URL,
@@ -95,13 +97,18 @@ public class DatabaseService {
     }
     
     /**
-     * Posts the query to the database.  Used for INSERT, UPDATE, and DROP
+     * Posts the query to the database.Used for INSERT, UPDATE, and DROP
      * queries.
      * @param query
-     * @return 
+     * @param addedItem
+     * @return
      */
-    public static boolean POST(String query) {
-        return false;
+    public static void POST(String query) {
+        try {
+            PreparedStatement st = _connection.prepareStatement(query);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException ex) { ex.printStackTrace(); }
     }
     
 }

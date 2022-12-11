@@ -12,7 +12,7 @@ public class Program {
     public static void main(String[] args) {
 //        Example:
 //
-//        new DatabaseService("localhost", "5432", "postgres", "postgres", "root");
+        new DatabaseService("localhost", "5432", "finalproject", "postgres", "admin");
 //        
 //        StringBuilder queryString = new StringBuilder();
 //        queryString.append("SELECT o.orderid, e.firstname first, e.lastname last FROM orders o ")
@@ -22,9 +22,12 @@ public class Program {
 //        Table queryTable = DatabaseService.GETAsPrintableTable(queryString.toString());
 //        
 //        System.out.println(queryTable);
+<<<<<<< HEAD
 
     
     PizzaProgram.start();
     
+=======
+>>>>>>> 942cb2c7a825485f2717baeb6914ec8a974e4f9c
     }
 }
