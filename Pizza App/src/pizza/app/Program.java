@@ -22,12 +22,10 @@ public class Program {
 //        Table queryTable = DatabaseService.GETAsPrintableTable(queryString.toString());
 //        
 //        System.out.println(queryTable);
-<<<<<<< HEAD
 
     
     PizzaProgram.start();
     
-=======
->>>>>>> 942cb2c7a825485f2717baeb6914ec8a974e4f9c
+
     }
 }
