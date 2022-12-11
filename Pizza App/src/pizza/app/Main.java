@@ -3,7 +3,7 @@ package pizza.app;
 /**
  * Main method and starting point of program.
  */
-public class Program {
+public class Main {
     
     // Main Method
     public static void main(String[] args) {
