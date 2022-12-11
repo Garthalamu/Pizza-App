@@ -22,7 +22,7 @@ public class PizzaOrder {
    
    public void setCrust(String crust) { this.crust = crust; }
    public void setCheese(String cheese) { this.cheese = cheese; }
-   public void setToppings(String topping) { this.toppings.add(topping); }
+   public void addTopping(String topping) { this.toppings.add(topping); }
    public void setQuantity(int quantity) { this.quantity = quantity; }
     
 }

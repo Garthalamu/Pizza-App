@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Order {
     
-    private ArrayList<PizzaOrder> pizzas;
+    //private ArrayList<PizzaOrder> pizzas;
     
     private String firstname;
     private String lastname;
@@ -21,7 +21,7 @@ public class Order {
     private BigInteger creditCard;
     
     
-    public ArrayList<PizzaOrder> getPizzas() { return pizzas; }
+    //public ArrayList<PizzaOrder> getPizzas() { return pizzas; }
     
     public String getFirstName() { return firstname; }
     public String getLastName() { return lastname; }
@@ -33,7 +33,7 @@ public class Order {
     public BigInteger getCreditCard() { return creditCard; }
     
     
-    public void addPizza(PizzaOrder pizza) { this.pizzas.add(pizza); }
+    //public void addPizza(PizzaOrder pizza) { this.pizzas.add(pizza); }
     
     public void setFirstName(String firstname) { this.firstname = firstname; }
     public void setLastName(String lastname) { this.lastname = lastname; }
