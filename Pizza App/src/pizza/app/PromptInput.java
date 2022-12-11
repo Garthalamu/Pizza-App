@@ -109,7 +109,7 @@ public final class PromptInput {
     {
         String selectedCheeseStr = "";
         
-        System.out.println("Select a cheese from the table below by typing the number of the cheese, or type 0 for no cheese.");
+        System.out.println("Select a cheese from the table below by typing the number of the cheese.");
         Table crustOptionsTable = dataBaseService.GETAsPrintableTable("SELECT ROW_NUMBER() OVER (ORDER BY cheeseType) AS \"Number\", cheeseType AS \"Cheese Type\" FROM cheese;");
         System.out.println(crustOptionsTable);
         
@@ -122,11 +122,7 @@ public final class PromptInput {
             maxInputNum = maxInputNumRS.getInt(1); 
             
             //Get and validate user input
-            int userInput = getUserSelectedNum(0,maxInputNum);
-            
-            //If we don't want cheese, return null from the method
-            if (userInput == 0)
-                return null;
+            int userInput = getUserSelectedNum(1,maxInputNum);
             
             //Get the user's selection as a string
             ResultSet selectedCheeseRS = dataBaseService.GET("SELECT sub.\"Cheese Type\" FROM (SELECT ROW_NUMBER() OVER (ORDER BY cheeseType) AS \"Number\", cheeseType AS \"Cheese Type\" FROM cheese) AS sub WHERE sub.\"Number\" = " + userInput + ";");
