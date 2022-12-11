@@ -23,6 +23,8 @@ public class Program {
 //        
 //        System.out.println(queryTable);
 
-
+    
+    PizzaProgram.start();
+    
     }
 }
