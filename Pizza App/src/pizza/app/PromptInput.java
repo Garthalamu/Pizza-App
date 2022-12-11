@@ -12,6 +12,7 @@ import io.bretty.console.table.*;
  */
 public final class PromptInput {
     
+    private static DatabaseService dataBaseService = new DatabaseService("localhost", "5432", "finalproject", "postgres", "admin");
     
     private PromptInput() {}
     
@@ -77,21 +78,21 @@ public final class PromptInput {
         String selectedCrustStr = "";
         
         System.out.println("Select a crust from the table below by typing the number of the crust.");
-        Table crustOptionsTable = DatabaseService.GETAsPrintableTable("SELECT ROW_NUMBER() OVER (ORDER BY crustType) AS \"Number\", crustType AS \"Crust Type\" FROM crust;");
+        Table crustOptionsTable = dataBaseService.GETAsPrintableTable("SELECT ROW_NUMBER() OVER (ORDER BY crustType) AS \"Number\", crustType AS \"Crust Type\" FROM crust;");
         System.out.println(crustOptionsTable);
         
         //Find max valid input num
         int maxInputNum;
         try 
         { 
-            ResultSet maxInputNumRS = DatabaseService.GET("SELECT COUNT(*) AS \"Max Number\" FROM crust;");
+            ResultSet maxInputNumRS = dataBaseService.GET("SELECT COUNT(*) AS \"Max Number\" FROM crust;");
             maxInputNum = maxInputNumRS.getInt(1); 
             
             //Get and validate user input
             int userInput = getUserSelectedNum(1,maxInputNum);
             
             //Get the user's selection as a string
-            ResultSet selectedCrustRS = DatabaseService.GET("SELECT sub.\"Crust Type\" FROM (SELECT ROW_NUMBER() OVER (ORDER BY crustType) AS \"Number\", crustType AS \"Crust Type\" FROM crust) AS sub WHERE sub.\"Number\" = " + userInput + ";");
+            ResultSet selectedCrustRS = dataBaseService.GET("SELECT sub.\"Crust Type\" FROM (SELECT ROW_NUMBER() OVER (ORDER BY crustType) AS \"Number\", crustType AS \"Crust Type\" FROM crust) AS sub WHERE sub.\"Number\" = " + userInput + ";");
             selectedCrustStr = selectedCrustRS.getString(1);
         } 
         catch (SQLException e) { e.printStackTrace(); }
