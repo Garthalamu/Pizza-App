@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import java.sql.*;
 import io.bretty.console.table.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DatabaseService {
     private String _URL,
@@ -49,6 +51,32 @@ public class DatabaseService {
         return null;
     }
     
+    public static ArrayList<ArrayList<String>> GETAsMultiArray(String query) {
+        ResultSet rs = GET(query);
+        
+        ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
+        
+        int columnCount;
+        
+        try {
+            ResultSetMetaData rsmd = rs.getMetaData();
+            columnCount = rsmd.getColumnCount();
+            
+            while (rs.next()) {
+                ArrayList<String> row = new ArrayList<String>();
+                for (int i = 0; i < columnCount; i++) {
+                    row.add(rs.getString(i+1));
+                }
+                data.add(row);
+            }
+            
+            return data;
+            
+        } catch (SQLException ex) { ex.printStackTrace(); }
+        
+        return null;
+    }
+    
     /**
      * Returns a Table object which contains the query and can be directly
      * printed to screen.
@@ -63,36 +91,30 @@ public class DatabaseService {
         
         ResultSet rs = GET(query);
         
-        ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
-        
+        int columnCount;
         try {
             // Pass headers and data into a multidimensional ArrayList
             ResultSetMetaData rsmd = rs.getMetaData();
-            int columnCount = rsmd.getColumnCount();
+            columnCount = rsmd.getColumnCount();
             
             String[] headers = new String[columnCount];
             for (int i = 1; i <= columnCount; i++) {
                 headers[i-1] = rsmd.getColumnName(i).toUpperCase();
             }
-            
-            while (rs.next()) {
-                ArrayList<String> row = new ArrayList<String>();
-                for (int i = 0; i < columnCount; i++) {
-                    row.add(rs.getString(i+1));
-                }
-                data.add(row);
-            }
-            
+
+            ArrayList<ArrayList<String>> data = GETAsMultiArray(query);
+
             // Convert Multidimensional ArrayList to Array
             String[][] dataAsArray = new String[data.size()][];
             for (int i = 0; i < data.size(); i++) {
                 ArrayList<String> row = data.get(i);
                 dataAsArray[i] = row.toArray(new String[row.size()]);
             }
-            
+
             return Table.of(headers, dataAsArray, cf);
-            
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseService.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         return null;
     }

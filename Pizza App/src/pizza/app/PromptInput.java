@@ -13,7 +13,7 @@ import java.math.BigInteger;
  */
 public final class PromptInput {
     
-    private static DatabaseService dataBaseService = new DatabaseService("localhost", "5432", "finalproject", "postgres", "admin");
+    private static DatabaseService dataBaseService = new DatabaseService("localhost", "5432", "postgres", "postgres", "root");
     
     private PromptInput() {}
     
