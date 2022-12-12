@@ -1,4 +1,4 @@
-package pizza.app;
+package pizza.app.entity;
 
 import java.util.ArrayList;
 
@@ -10,19 +10,19 @@ public class PizzaOrder {
     
     private String crust;
     private String cheese;
-    private ArrayList<String> toppings = new ArrayList<String>();
+    private String topping;
     private int quantity;
     
     
     public String getCrust() { return crust; }
     public String getCheese() { return cheese; }
-    public ArrayList<String> getToppings() { return toppings; }
+    public String getTopping() { return topping; }
     public int getQuantity() { return quantity; }
    
    
     public void setCrust(String crust) { this.crust = crust; }
     public void setCheese(String cheese) { this.cheese = cheese; }
-    public void addTopping(String topping) { this.toppings.add(topping); }
+    public void addTopping(String topping) { this.topping = topping; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
     
 }

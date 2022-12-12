@@ -1,10 +1,9 @@
 package pizza.app;
 
-import java.sql.*;
+import pizza.app.entity.PizzaOrder;
+import pizza.app.entity.Order;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -95,7 +94,7 @@ public final class PizzaProgram {
                 
                 DatabaseService.POST(
                         "INSERT INTO pizza_order_toppings VALUES "
-                            + "("+orderid+", "+1+", '"+pizzaOrder.getToppings().get(0)+"')"
+                            + "("+orderid+", "+1+", '"+pizzaOrder.getTopping()+"')"
                 );
                 
                 System.out.println("***Order has been added to database, returning to main menu.***");

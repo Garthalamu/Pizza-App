@@ -1,4 +1,4 @@
-package pizza.app;
+package pizza.app.entity;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

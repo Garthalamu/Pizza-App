@@ -1,6 +1,7 @@
 
 package pizza.app;
 
+import pizza.app.entity.Order;
 import java.util.Scanner;
 import java.sql.*;
 import io.bretty.console.table.*;
