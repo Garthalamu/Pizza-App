@@ -62,7 +62,9 @@ public final class PizzaProgram {
                 }
                 
                 if (!alreadyCustomer) {
-                    custid = Integer.parseInt(DatabaseService.GETAsMultiArray("SELECT MAX(customerid) FROM customer").get(0).get(0)) + 1;
+                    try {
+                        custid = Integer.parseInt(DatabaseService.GETAsMultiArray("SELECT MAX(customerid) FROM customer").get(0).get(0)) + 1;
+                    } catch (NumberFormatException ex) { custid = 0; }
                     DatabaseService.POST("INSERT INTO customer VALUES "
                             + "(" + custid + ", '" + order.getFirstName() + "', '"+order.getLastName()+"', "
                                     + "'"+ order.getStreet() +"', '"+ order.getCity() +"', "
@@ -72,16 +74,19 @@ public final class PizzaProgram {
                 }
                 
                 // get a random chef and driver
-                ArrayList<String> chefids = DatabaseService.GETAsMultiArray("SELECT employeeid FROM employee WHERE title='Cook'").get(0);
-                ArrayList<String> driverids = DatabaseService.GETAsMultiArray("SELECT employeeid FROM employee WHERE title='Driver'").get(0);
+                ArrayList<ArrayList<String>> chefids = DatabaseService.GETAsMultiArray("SELECT employeeid FROM employee WHERE title='Cook'");
+                ArrayList<ArrayList<String>> driverids = DatabaseService.GETAsMultiArray("SELECT employeeid FROM employee WHERE title='Driver'");
                 // get random id's
                 int chefid, driverid;
                 Random rand = new Random();
-                chefid = Integer.parseInt(chefids.get(rand.nextInt(chefids.size())));
-                driverid = Integer.parseInt(driverids.get(rand.nextInt(driverids.size())));
+                chefid = Integer.parseInt(chefids.get(rand.nextInt(chefids.size())).get(0));
+                driverid = Integer.parseInt(driverids.get(rand.nextInt(driverids.size())).get(0));
                 
-                int orderid = Integer.parseInt(DatabaseService.GETAsMultiArray("SELECT MAX(orderid) FROM orders").get(0).get(0))+1;
-                
+                int orderid;
+                try {
+                    orderid = Integer.parseInt(DatabaseService.GETAsMultiArray("SELECT MAX(orderid) FROM orders").get(0).get(0))+1;
+                } catch (NumberFormatException ex) { orderid = 0; }
+                    
                 DatabaseService.POST(
                         "INSERT INTO orders VALUES "
                             + "("+orderid+", "+chefid+", "+driverid+", "+custid+")"
@@ -103,6 +108,13 @@ public final class PizzaProgram {
             if (menuSelect == 2)
             {
                 PromptInput.ViewOrders();
+                
+                PromptInput.DeleteOrder();
+            }
+            
+            if (menuSelect == 3) 
+            {
+                PromptInput.ShowCustomers();
             }
 
         }

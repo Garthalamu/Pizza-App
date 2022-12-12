@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.sql.*;
 import io.bretty.console.table.*;
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 /**
  *
@@ -114,8 +115,9 @@ public final class PromptInput {
     {
         System.out.println("Select an option below by entering the relevant number:\n"
                             + "1 -- Place an order\n"
-                            + "2 -- View orders\n");
-        int userInput = getUserSelectedNum(1,2);
+                            + "2 -- View orders\n"
+                            + "3 -- View Customers\n");
+        int userInput = getUserSelectedNum(1,3);
         return userInput;
     }
     
@@ -228,6 +230,30 @@ public final class PromptInput {
 //            return false;
 //    }
     
+    public static void ShowCustomers() {
+        System.out.println(DatabaseService.GETAsPrintableTable("SELECT * FROM customer"));
+    }
+    
+    public static void DeleteOrder() {
+        String userInput;
+        
+        System.out.println("\nWould you like to delete an order? [Y/N]");
+        userInput = getNextToken();
+        
+        if (userInput.toLowerCase().contains("y")) {
+            System.out.println("Type the orderid you would like deleted.");
+            int id = Integer.parseInt(getNextToken());
+            DatabaseService.POST(
+                    "DELETE FROM pizza_order_toppings WHERE orderid="+id
+                  + "; DELETE FROM pizza_order WHERE orderid="+id
+                  + "; DELETE FROM orders WHERE orderid="+id
+            );
+            System.out.println("Deleted orderid " + id + " from database.");
+        } else {
+            return;
+        }
+    }
+    
     
     public static Order customerInfo()
     {
@@ -241,6 +267,16 @@ public final class PromptInput {
         System.out.println("Enter your last name:");
         userInput = getNextToken();
         order.setLastName(userInput);
+        
+        // user already created
+        ArrayList<ArrayList<String>> customers = DatabaseService.GETAsMultiArray("SELECT customerid,firstname,lastname FROM customer");
+        
+        for (ArrayList<String> customer : customers) {
+            if (customer.get(1).contains(order.getFirstName()) && customer.get(2).contains(order.getLastName())) {
+                System.out.println("Detected customer: "+order.getFirstName()+" "+order.getLastName());
+                return order;
+            }
+        }
         
         System.out.println("Enter your street address, not including city, state, or zip:");
         userInput = getNextLine();
@@ -259,13 +295,15 @@ public final class PromptInput {
         order.setZip(userInput);
         
         System.out.println("Enter your payment type (Card or Cash):");
-        userInput = getNextToken();
+        userInput = getNextLine();
         order.setPaymentType(userInput);
         
-        BigInteger userCreditCard;
-        System.out.println("Enter your credit card number:");
-        userCreditCard = getNextBigInt();
-        order.setCreditCard(userCreditCard);
+        if (order.getPaymentType().toLowerCase().contains("card")) {
+            BigInteger userCreditCard;
+            System.out.println("Enter your credit card number:");
+            userCreditCard = getNextBigInt();
+            order.setCreditCard(userCreditCard);
+        }
         
         return order;
     }
@@ -273,7 +311,7 @@ public final class PromptInput {
     
     public static void ViewOrders() {
         System.out.println(DatabaseService.GETAsPrintableTable(
-                "SELECT po.orderid, po.itemnum, po.amount, po.crusttype \"crust\", " +
+                "SELECT po.orderid, po.crusttype \"crust\", " +
                 "po.cheesetype \"cheese\", pot.toppingtype \"topping\", " +
                 "CONCAT(chef.firstname,' ',chef.lastname) \"chef Name\", " +
                 "CONCAT(driver.firstname,' ',driver.lastname) \"driver Name\", " +

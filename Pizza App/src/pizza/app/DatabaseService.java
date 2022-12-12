@@ -70,7 +70,7 @@ public class DatabaseService {
                 data.add(row);
             }
             
-            return data;
+            return replaceNullValues(data);
             
         } catch (SQLException ex) { ex.printStackTrace(); }
         
@@ -117,6 +117,25 @@ public class DatabaseService {
         }
         
         return null;
+    }
+    
+    
+    /**
+    * Replaces all null values in the given data with empty strings.
+    *
+    * @param data an ArrayList of ArrayLists of strings representing the data to process
+    * @return an ArrayList of ArrayLists of strings where all null values have been replaced with empty strings
+    */
+    private static ArrayList<ArrayList<String>> replaceNullValues(ArrayList<ArrayList<String>> data) {
+        for (int i = 0; i < data.size(); i++) {
+            ArrayList<String> row = data.get(i);
+            for (int j = 0; j < row.size(); j++) {
+                if (row.get(j) == null) {
+                    row.set(j, "");
+                }
+            }
+        }
+        return data;
     }
     
     /**
