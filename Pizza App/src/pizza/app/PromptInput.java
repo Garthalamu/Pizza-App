@@ -214,18 +214,18 @@ public final class PromptInput {
         return selectedToppingStr;
     }
     
-    public static boolean requestMoreToppings()
-    {
-        System.out.println("Select an option below by entering the relevant number:\n"
-                            + "1 -- Add another topping\n"
-                            + "2 -- Continue with order\n");
-        int userInput = getUserSelectedNum(1,2);
-        
-        if (userInput == 1)
-            return true;
-        else
-            return false;
-    }
+//    public static boolean requestMoreToppings()
+//    {
+//        System.out.println("Select an option below by entering the relevant number:\n"
+//                            + "1 -- Add another topping\n"
+//                            + "2 -- Continue with order\n");
+//        int userInput = getUserSelectedNum(1,2);
+//        
+//        if (userInput == 1)
+//            return true;
+//        else
+//            return false;
+//    }
     
     
     public static Order customerInfo()

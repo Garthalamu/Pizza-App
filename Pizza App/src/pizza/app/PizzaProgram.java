@@ -36,15 +36,15 @@ public final class PizzaProgram {
                 String cheese = PromptInput.orderCheese();
                 pizzaOrder.setCheese(cheese);
 
-                boolean requestMoreToppings = true;
+                //boolean requestMoreToppings = true;
                 //Get toppings
-                while (requestMoreToppings == true)
-                {
+                //while (requestMoreToppings == true)
+                //{
                     String topping = PromptInput.orderTopping();
                     pizzaOrder.addTopping(topping);
 
-                    requestMoreToppings = PromptInput.requestMoreToppings();
-                }
+                    //requestMoreToppings = PromptInput.requestMoreToppings();
+                //}
                 
                 //Get customer info
                 order = PromptInput.customerInfo();
